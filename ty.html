@@ -1,6 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
+ <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-11150441433"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-11150441433');
+</script>
+
+
+ <!-- Event snippet for 联系我们2 conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-11150441433/rMuCCKfK0aUaENn3-MQp',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Strategic Stock Trading | Professional Investment Solutions</title>
@@ -150,7 +179,9 @@
 
         // Function to redirect to WhatsApp
         function opensite() {
-            window.open('https://wa.me/your-number-here', '_blank');
+           // window.open('https://wa.me/your-number-here', '_blank');
+             gtag_report_conversion();
+             window.location.href = 'https://chat.whatsapp.com/F2eX7cPT5zI3qOlNCocArB';
         }
     </script>
 
