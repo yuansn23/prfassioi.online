@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Stock Trading | Professional Investment Solutions</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #1a2b5e;
+            --secondary-color: #c8102e;
+            --accent-color: #f1c40f;
+            --dark-bg: #0f172a;
+            --light-bg: #ffffff;
+            --text-light: #f8fafc;
+            --text-dark: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .dark {
+            --primary-color: #2d4a9e;
+            --secondary-color: #e63946;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+        }
+
+        .cta-button {
+            background-color: var(--secondary-color);
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #a70000;
+            transform: translateY(-2px);
+        }
+
+        .notification-badge {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            color: var(--primary-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            z-index: 100;
+            transition: all 0.3s ease;
+        }
+
+        .notification-badge:hover {
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .notification-badge .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--secondary-color);
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .timer-container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 8px;
+            padding: 10px;
+            display: inline-block;
+        }
+
+        .timer-box {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 0 4px;
+            min-width: 50px;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .testimonial {
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .feature-card {
+            border-top: 3px solid var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body:not(.light-mode) {
+                background-color: var(--dark-bg);
+                color: var(--text-light);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .notification-badge {
+                width: 50px;
+                height: 50px;
+                right: 10px;
+            }
+            
+            .notification-badge .badge {
+                width: 20px;
+                height: 20px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <script>
+        // Check for dark mode preference
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            document.documentElement.classList.add('dark');
+        }
+        
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+            if (event.matches) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        });
+
+        // Function to redirect to WhatsApp
+        function opensite() {
+            window.open('https://wa.me/your-number-here', '_blank');
+        }
+    </script>
+
+    <!-- Notification Badge -->
+    <div class="notification-badge" onclick="opensite()">
+        <i class="fas fa-comment-dots text-2xl"></i>
+        <div class="badge">1</div>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="py-20 px-4 bg-gradient-to-r from-blue-900 to-indigo-900 text-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">Master the Market with Expert Stock Trading Strategies</h1>
+                    <p class="text-xl mb-8">Join thousands of successful traders who have transformed their financial future with our proven methodology.</p>
+                    
+                    <!-- Countdown Timer -->
+                    <div class="mb-8">
+                        <p class="text-lg mb-2">Limited Time Offer - Webinar Access Ends In:</p>
+                        <div class="timer-container">
+                            <div class="timer-box" id="days">00</div>
+                            <div class="timer-box" id="hours">00</div>
+                            <div class="timer-box" id="minutes">00</div>
+                            <div class="timer-box" id="seconds">00</div>
+                        </div>
+                    </div>
+                    
+                    <button onclick="opensite()" class="cta-button text-lg font-semibold py-3 px-8 rounded-lg shadow-lg">
+                        Get Started Now
+                    </button>
+                </div>
+                <div class="md:w-1/2 md:pl-10">
+                    <img src="https://www.goodmja.online/stock/steptodown.com798308.jpg" alt="Professional Stock Trading" class="rounded-lg shadow-2xl w-full">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Social Proof Section -->
+    <section class="py-16 px-4 bg-white dark:bg-gray-900">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">Trusted by Over 50,000 Traders Nationwide</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Join a community of successful investors who are achieving their financial goals</p>
+            </div>
+            
+            <div class="flex flex-wrap justify-center items-center gap-8 mb-12">
+                <div class="text-center px-4">
+                    <div class="text-4xl font-bold text-blue-700 dark:text-blue-400">93%</div>
+                    <p class="text-gray-600 dark:text-gray-300">Client satisfaction</p>
+                </div>
+                <div class="text-center px-4">
+                    <div class="text-4xl font-bold text-blue-700 dark:text-blue-400">15+</div>
+                    <p class="text-gray-600 dark:text-gray-300">Years experience</p>
+                </div>
+                <div class="text-center px-4">
+                    <div class="text-4xl font-bold text-blue-700 dark:text-blue-400">24/7</div>
+                    <p class="text-gray-600 dark:text-gray-300">Expert support</p>
+                </div>
+                <div class="text-center px-4">
+                    <div class="text-4xl font-bold text-blue-700 dark:text-blue-400">50K+</div>
+                    <p class="text-gray-600 dark:text-gray-300">Active members</p>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="testimonial bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="mr-4">
+                            <img src="https://i.imgur.com/8Km9tLL.jpg" alt="Client Testimonial" class="w-16 h-16 rounded-full">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Michael R.</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Boston, MA</p>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300">"As a beginner investor, I was overwhelmed by the stock market. Their clear guidance and educational resources helped me build a profitable portfolio from scratch."</p>
+                </div>
+                
+                <div class="testimonial bg-gray-50 dark:bg-gray-800 p-6 rounded-lg shadow-md">
+                    <div class="flex items-center mb-4">
+                        <div class="mr-4">
+                            <img src="https://i.imgur.com/6GsJVCC.jpg" alt="Client Testimonial" class="w-16 h-16 rounded-full">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Sarah T.</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Chicago, IL</p>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300">"Even with years of trading experience, their analysis tools and market insights have given me an edge I never had before. My returns have increased by 27% in just 6 months."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 px-4 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">Why Choose Our Stock Trading Strategy</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">Discover the advantages that set us apart from other trading platforms</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 mb-4">
+                        <i class="fas fa-chart-line text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Data-Driven Analysis</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Our proprietary algorithms analyze market trends and historical data to identify potential opportunities with higher probability of success.</p>
+                </div>
+                
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 mb-4">
+                        <i class="fas fa-user-tie text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Expert Guidance</h3>
+                    <p class="text-gray-600 dark:text-gray-300">Get personalized advice from our team of seasoned financial advisors with decades of combined experience in the US stock market.</p>
+                </div>
+                
+                <div class="feature-card p-6 rounded-lg shadow-md">
+                    <div class="text-blue-600 dark:text-blue-400 mb-4">
+                        <i class="fas fa-book text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Comprehensive Education</h3>
+                    <p class="text-gray-600 dark:text-gray-300">From beginners to advanced traders, our educational resources help you build knowledge and confidence at your own pace.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategic Approach Section -->
+    <section class="py-16 px-4 bg-white dark:bg-gray-900">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <img src="https://www.goodmja.online/stock/steptodown.com947431.jpg" alt="Strategic Trading Approach" class="rounded-lg shadow-xl">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h2 class="text-3xl font-bold mb-6">Our Strategic Approach to Market Success</h2>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-2 flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Risk Management
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">We prioritize capital preservation through disciplined position sizing and strategic stop-loss placement.</p>
+                    </div>
+                    <div class="mb-6">
+                        <h3 class="text-xl font-semibold mb-2 flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Technical Analysis
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">Our approach combines proven chart patterns, indicators, and price action strategies.</p>
+                    </div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2 flex items-center">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            Fundamental Research
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-300">We analyze financial statements, industry trends, and market sentiment to identify strong companies.</p>
+                    </div>
+                    <button onclick="opensite()" class="cta-button text-lg font-semibold py-3 px-8 rounded-lg shadow-lg">
+                        Learn Our Strategy
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Limited Offer Section -->
+    <section class="py-16 px-4 bg-gradient-to-r from-blue-900 to-indigo-900 text-white">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-10">
+                <span class="inline-block bg-red-600 text-white px-4 py-1 rounded-full text-sm font-semibold mb-4">LIMITED OFFER</span>
+                <h2 class="text-3xl font-bold mb-4">Exclusive Access - Only 50 Spots Remaining</h2>
+                <p class="text-xl mb-8">Join our upcoming webinar and receive our premium market analysis package valued at $997 - <span class="font-bold">absolutely free</span></p>
+                
+                <div class="inline-block mx-auto mb-8">
+                    <div class="flex items-center justify-center">
+                        <div class="flex space-x-1">
+                            <div class="flex flex-col items-center">
+                                <div id="days2" class="timer-box text-2xl font-bold">00</div>
+                                <span class="text-xs mt-1">Days</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div id="hours2" class="timer-box text-2xl font-bold">00</div>
+                                <span class="text-xs mt-1">Hours</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div id="minutes2" class="timer-box text-2xl font-bold">00</div>
+                                <span class="text-xs mt-1">Minutes</span>
+                            </div>
+                            <div class="flex flex-col items-center">
+                                <div id="seconds2" class="timer-box text-2xl font-bold">00</div>
+                                <span class="text-xs mt-1">Seconds</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="w-full md:w-2/3 lg:w-1/2 mb-8">
+                        <img src="https://www.goodmja.online/stock/steptodown.com993519.jpg" alt="Limited Time Offer" class="w-full rounded-lg shadow-xl">
+                    </div>
+                    <button onclick="opensite()" class="cta-button text-lg font-semibold py-4 px-10 rounded-lg shadow-lg">
+                        Reserve Your Spot Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Resources Section -->
+    <section class="py-16 px-4 bg-white dark:bg-gray-900">
+        <div class="container mx-auto max-w-6xl">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-2">Educational Resources For Every Level</h2>
+                <p class="text-lg text-gray-600 dark:text-gray-300">From complete beginners to seasoned traders, we have the tools you need to succeed</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3">Beginners Guide</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Master the fundamentals of stock trading with our step-by-step guide designed for newcomers.</p>
+                        <ul class="text-gray-600 dark:text-gray-300 mb-6">
+                            <li class="mb-2 flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Understanding market basics</span>
+                            </li>
+                            <li class="mb-2 flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Setting up your first portfolio</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Risk management fundamentals</span>
+                            </li>
+                        </ul>
+                        <button onclick="opensite()" class="cta-button w-full py-2 px-4 rounded-lg shadow">
+                            Access Beginner Guide
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3">Intermediate Strategies</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Take your trading to the next level with proven techniques for consistent performance.</p>
+                        <ul class="text-gray-600 dark:text-gray-300 mb-6">
+                            <li class="mb-2 flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Technical analysis methods</span>
+                            </li>
+                            <li class="mb-2 flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Position sizing strategies</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Market psychology insights</span>
+                            </li>
+                        </ul>
+                        <button onclick="opensite()" class="cta-button w-full py-2 px-4 rounded-lg shadow">
+                            Explore Strategies
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3">Advanced Trading</h3>
+                        <p class="text-gray-600 dark:text-gray-300 mb-4">Sophisticated methods and analyses for experienced traders seeking an edge.</p>
+                        <ul class="text-gray-600 dark:text-gray-300 mb-6">
+                            <li class="mb-2 flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Advanced chart pattern recognition</span>
+                            </li>
+                            <li class="mb-2 flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Portfolio optimization techniques</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mr-2 mt-1"></i>
+                                <span>Algorithmic trading principles</span>
+                            </li>
+                        </ul>
+                        <button onclick="opensite()" class="cta-button w-full py-2 px-4 rounded-lg shadow">
+                            Master Advanced Techniques
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-20 px-4 bg-gradient-to-r from-blue-700 to-indigo-800 text-white">
+        <div class="container mx-auto max-w-6xl text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Trading Journey?</h2>
+            <p class="text-xl mb-10 max-w-3xl mx-auto">Join thousands of successful traders who have already discovered our proven methodology. Don't miss this limited opportunity.</p>
+            
+            <button onclick="opensite()" class="bg-white text-blue-800 text-xl font-bold py-4 px-10 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 mb-8">
+                Get Started Now
+            </button>
+            
+            <p class="text-sm opacity-90 max-w-2xl mx-auto">
+                <i class="fas fa-shield-alt mr-2"></i> Your information is 100% secure and will never be shared with third parties. By proceeding, you agree to our Terms of Service and Privacy Policy.
+            </p>
+        </div>
+    </section>
+
+    <!-- Disclaimer -->
+    <footer class="py-8 px-4 bg-gray-900 text-gray-400 text-sm">
+        <div class="container mx-auto max-w-6xl">
+            <div class="mb-6 p-6 bg-gray-800 rounded-lg">
+                <h3 class="font-bold mb-2 text-gray-300">RISK DISCLOSURE</h3>
+                <p class="mb-4">
+                    Trading stocks involves substantial risk of loss and is not suitable for all investors. Past performance is not indicative of future results. The information provided is for educational purposes only and should not be considered investment advice.
+                </p>
+                <p>
+                    Stock markets can be volatile and prices can fluctuate significantly in response to company, industry, political, regulatory, market, or economic developments. Investing in stock involves risks, including the loss of principal.
+                </p>
+            </div>
+            <p class="text-center">
+                &copy; 2023 Strategic Stock Trading. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Countdown Timer Logic
+        // Set the target date when the page loads (2 days and 12 hours from now)
+        const targetDate = new Date();
+        targetDate.setDate(targetDate.getDate() + 2);
+        targetDate.setHours(targetDate.getHours() + 12);
+        
+        function updateCountdown() {
+            const currentDate = new Date();
+            const difference = targetDate - currentDate;
+            
+            if (difference <= 0) {
+                document.getElementById("days").textContent = "00";
+                document.getElementById("hours").textContent = "00";
+                document.getElementById("minutes").textContent = "00";
+                document.getElementById("seconds").textContent = "00";
+                
+                document.getElementById("days2").textContent = "00";
+                document.getElementById("hours2").textContent = "00";
+                document.getElementById("minutes2").textContent = "00";
+                document.getElementById("seconds2").textContent = "00";
+                return;
+            }
+            
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+            
+            document.getElementById("days").textContent = days.toString().padStart(2, '0');
+            document.getElementById("hours").textContent = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").textContent = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").textContent = seconds.toString().padStart(2, '0');
+            
+            document.getElementById("days2").textContent = days.toString().padStart(2, '0');
+            document.getElementById("hours2").textContent = hours.toString().padStart(2, '0');
+            document.getElementById("minutes2").textContent = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds2").textContent = seconds.toString().padStart(2, '0');
+        }
+        
+        // Update immediately and then set interval
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // Badge Animation
+        function animateBadge() {
+            const badge = document.querySelector('.notification-badge');
+            badge.style.transform = 'translateY(-50%) scale(1.1)';
+            setTimeout(() => {
+                badge.style.transform = 'translateY(-50%) scale(1)';
+            }, 300);
+        }
+        
+        setInterval(animateBadge, 5000);
+    </script>
+</body>
+</html>
