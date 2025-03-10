@@ -1,0 +1,60 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="fo-verify" content="538bd53f-542c-41d1-a782-9575a961f5c5" />
+<meta name="fo-verify" content="52d428e1-bd1a-49f2-b77a-bf9d2645175b" />	  
+ 
+
+  <title>WELCOME</title>
+  <meta charset="utf-8">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+	  font-size: 14px; /* 调整字体大小 */
+      
+     height: 100%;
+      border: none;
+    }
+  </style>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Expires" content="0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+</head>
+	 
+  <body onload="handleResponse()">
+ 
+<script>
+  function handleResponse() {
+     //var province = response.result.province;
+
+   var url;
+    if (navigator.userAgent.includes('Android')) {
+      url = 'https://www.webmd.com/';
+	 
+    } else {
+      url = 'https://www.webmd.com/';
+	 
+    }
+
+    var iframe = document.createElement('iframe');
+    iframe.src = url;
+    iframe.style.width = '100%';
+    iframe.style.height = '100vh';
+    document.body.appendChild(iframe);
+  }
+</script>
+ 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+</html>
