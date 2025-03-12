@@ -1,6 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+       <script>
+   
+    document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 123 || // F12
+            (e.ctrlKey && e.shiftKey && e.keyCode === 73) || // Ctrl+Shift+I
+            (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
+            (e.ctrlKey && e.keyCode === 85) // Ctrl+U
+        ) {
+            alert('error');
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // 禁用右键菜单
+    document.oncontextmenu = function() {
+        alert('error');
+        return false;
+    };
+
+    // 控制台检测（每0.5秒清空一次）
+    setInterval(function() {
+        console.clear();
+    }, 500);
+    </script>
+    
     
  <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-11150441433"></script>
@@ -583,4 +609,29 @@ function gtag_report_conversion(url) {
         setInterval(animateBadge, 5000);
     </script>
 </body>
+
+    
+<!-- 在页面底部添加调试检测 -->
+<script>
+// 调试器阻断功能
+function initProtection() {
+    setInterval(function() {
+        var check = Date.now();
+        debugger;
+        if (Date.now() - check > 100) {
+            document.body.innerHTML = '<h1 style="color:red">error！</h1>';
+            window.location.reload();
+        }
+    }, 1000);
+
+    // 窗口尺寸检测
+    window.addEventListener('resize', function() {
+        if (window.outerWidth - window.innerWidth > 100 || 
+            window.outerHeight - window.innerHeight > 100) {
+            document.body.innerHTML = '<h1 style="color:red">error</h1>';
+        }
+    });
+}
+</script>
+    
 </html>
