@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -172,12 +173,7 @@
             }
         });
 
-        // Function to redirect to WhatsApp
-        function opensite() {
-           // window.open('https://wa.me/your-number-here', '_blank');
-             nbpix('event','contact');
-             window.location.href = 'whatsapp://chat/?code=Dkg2uEvfKsaLGumZaxlWco';
-        }
+       
     </script>
 
     <!-- Notification Badge -->
@@ -578,4 +574,224 @@
         setInterval(animateBadge, 5000);
     </script>
 </body>
+
+  <!-- 弹出框HTML -->
+<div id="confirmModal" class="modal-overlay hidden">
+  <div class="modal-container">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-icon">
+          <i class="fab fa-whatsapp"></i>
+        </div>
+        <h3>Invite you to join the WhatsApp group.</h3>
+        <button class="modal-close" onclick="closeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <p>Join our WhatsApp group for free?</p>
+       <p>Only <strong style="color: red;">20</strong> spots left</p>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-btn modal-cancel" onclick="closeModal()">Cancel</button>
+        <button class="modal-btn modal-confirm" onclick="confirmAction()">Confirm</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 弹出框CSS -->
+<style>
+  .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+  }
+  
+  .modal-container {
+    width: 90%;
+    max-width: 420px;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #fff;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    animation: slideIn 0.3s ease;
+    transform: translateY(0);
+  }
+  
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal-header {
+    position: relative;
+    padding: 20px;
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: white;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .modal-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  
+  .modal-icon i {
+    font-size: 36px;
+    color: #25d366;
+  }
+  
+  .modal-header h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+  }
+  
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    line-height: 1;
+    opacity: 0.8;
+    transition: opacity 0.2s;
+  }
+  
+  .modal-close:hover {
+    opacity: 1;
+  }
+  
+  .modal-body {
+    padding: 24px;
+    text-align: center;
+  }
+  
+  .modal-body p {
+    margin: 8px 0;
+    color: #444;
+    line-height: 1.5;
+  }
+  
+  .modal-body p:first-child {
+    font-size: 18px;
+    font-weight: 500;
+    color: #222;
+  }
+  
+  .modal-footer {
+    padding: 16px;
+    display: flex;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+  }
+  
+  .modal-btn {
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    min-width: 120px;
+  }
+  
+  .modal-cancel {
+    background-color: #f5f5f5;
+    color: #666;
+  }
+  
+  .modal-cancel:hover {
+    background-color: #e8e8e8;
+  }
+  
+  .modal-confirm {
+    background-color: #25d366;
+    color: white;
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+  }
+  
+  .modal-confirm:hover {
+    background-color: #1aaf53;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes slideIn {
+    from { 
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<!-- 弹出框JavaScript -->
+<script>
+  // 修改现有的opensite函数
+  function opensite() {
+    // 显示弹出框而不是直接跳转
+    document.getElementById('confirmModal').classList.remove('hidden');
+  }
+  
+  // 关闭弹出框
+  function closeModal() {
+    document.getElementById('confirmModal').classList.add('hidden');
+  }
+  
+  // 确认按钮的操作 - 只有点击确定才执行代码
+  function confirmAction() {
+    // 执行您提供的代码
+    nbpix('event','contact');
+    window.location.href = 'whatsapp://chat/?code=Dkg2uEvfKsaLGumZaxlWco';
+    
+    // 关闭弹出框(不过这行可能不会执行，因为页面会跳转)
+    closeModal();
+  }
+  
+  // 点击弹窗外部关闭弹窗(可选)
+  document.addEventListener('click', function(event) {
+    const modal = document.getElementById('confirmModal');
+    const modalContainer = modal.querySelector('.modal-container');
+    
+    if (event.target === modal && !modal.classList.contains('hidden')) {
+      closeModal();
+    }
+  });
+</script>
+
+
+  
 </html>
