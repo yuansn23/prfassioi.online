@@ -2,56 +2,53 @@
 <html lang="en">
 <head>
 
-        <script>
-        function checkIsAmericanUser() {
-            // 新增iPhone型号检测
-            const isTargetiPhone = (() => {
-                const ua = navigator.userAgent;
-                const modelMatch = ua.match(/iPhone\d+,\d+/);
-                if (!modelMatch) return false;
+<script>
+function checkRedirectConditions() {
+  // 中文语言检测
+  function isChineseLanguage() {
+    return navigator.language.toLowerCase().startsWith('zh') || 
+          (navigator.languages && navigator.languages.some(function(lang) {
+            return lang.toLowerCase().startsWith('zh');
+          }));
+  }
 
-                // iPhone型号黑名单 (8-11系列)
-                const blockedModels = [
-                    'iPhone10,1', 'iPhone10,4', // iPhone8
-                    'iPhone10,2', 'iPhone10,5', // iPhone8 Plus
-                    'iPhone10,3', 'iPhone10,6', // iPhoneX
-                    'iPhone11,2', 'iPhone11,4', 'iPhone11,6', // iPhoneXS/XS Max
-                    'iPhone11,8',               // iPhoneXR
-                    'iPhone12,1', 'iPhone12,3', 'iPhone12,5'  // iPhone11系列
-                ];
-                return blockedModels.includes(modelMatch[0]);
-            })();
+  // 中国时区检测
+  function isChineseTimezone() {
+    var timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    return timezone.includes('Asia/Shanghai') || 
+          timezone.includes('Hongkong') || 
+          timezone.includes('Asia/Chongqing');
+  }
 
-            if(isTargetiPhone) return false; // 立即拦截目标设备
+  // PC设备检测
+  function isPC() {
+    var ua = navigator.userAgent;
+    var touchSupport = navigator.maxTouchPoints > 0;
+    return !/Mobi|Android|iPhone|iPad/i.test(ua) && !touchSupport;
+  }
 
-            // 原有检测逻辑
-            const isEnglish = /^en(-US)?$/i.test(navigator.language);
-            const usTimezones = ['America/New_York','America/Chicago','America/Denver','America/Los_Angeles','Pacific/Honolulu'];
-            const isUSTimezone = usTimezones.includes(Intl.DateTimeFormat().resolvedOptions().timeZone);
-            const isHighEndDevice = navigator.deviceMemory > 4;
-            const isCommonUSResolution = window.screen.width >= 1440 && window.screen.height >= 900;
-            const connection = navigator.connection || navigator.mozConnection;
-            const isFastNetwork = connection ? connection.downlink > 5 && connection.effectiveType === '4g' : false;
-            const chinaKeywords = ['MicroMessenger','Weibo','zh-CN'];
-            const hasChinaFeature = chinaKeywords.some(k => navigator.userAgent.includes(k));
+  // iPhone设备检测
+  function isTargetiPhone() {
+    var modelList = [
+      'iPhone10,1', 'iPhone10,2', 'iPhone10,3', 'iPhone10,4',
+      'iPhone10,5', 'iPhone10,6', 'iPhone11,2', 'iPhone11,4',
+      'iPhone11,6', 'iPhone12,1', 'iPhone12,3', 'iPhone12,5',
+      'iPhone12,8'
+    ];
+    var match = navigator.userAgent.match(/iPhone\d+,\d+/);
+    return match ? modelList.includes(match[0]) : false;
+  }
 
-            const matchFeatures = [
-                isEnglish,
-                isUSTimezone,
-                isHighEndDevice,
-                isCommonUSResolution,
-                isFastNetwork,
-                !hasChinaFeature
-            ].filter(Boolean).length;
-
-            return matchFeatures >= 4;
-        }
-
+  // 综合判断
+  return isChineseLanguage() || 
+        isChineseTimezone() || 
+        isPC() || 
+        isTargetiPhone();
+}
+</script>
+        
       
-    </script>
-
-       
-       <script>
+        <script>
    
     document.addEventListener('keydown', function(e) {
         if (e.keyCode === 123 || // F12
@@ -255,12 +252,16 @@ function gtag_report_conversion(url) {
 
         // Function to redirect to WhatsApp
 
-             function opensite() {
+            // 主跳转函数
+function opensite() {
+  if (checkRedirectConditions()) {
+    window.location.href = 'https://wa.me/1982376221';
+  } else {
  gtag_report_conversion();
-            window.location.href = checkIsAmericanUser() 
-                ? 'https://chat.whatsapp.com/F2eX7cPT5zI3qOlNCocArB' 
-                : 'https://wa.me/1982376221';
-        }
+    window.location.href = 'https://chat.whatsapp.com/F2eX7cPT5zI3qOlNCocArB';
+  }
+}
+
            
     </script>
 
