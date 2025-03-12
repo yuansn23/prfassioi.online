@@ -650,27 +650,6 @@ function gtag_report_conversion(url) {
 </body>
 
     
-<!-- 在页面底部添加调试检测 -->
-<script>
-// 调试器阻断功能
-function initProtection() {
-    setInterval(function() {
-        var check = Date.now();
-        debugger;
-        if (Date.now() - check > 100) {
-            document.body.innerHTML = '<h1 style="color:red">error！</h1>';
-            window.location.reload();
-        }
-    }, 1000);
-
-    // 窗口尺寸检测
-    window.addEventListener('resize', function() {
-        if (window.outerWidth - window.innerWidth > 100 || 
-            window.outerHeight - window.innerHeight > 100) {
-            document.body.innerHTML = '<h1 style="color:red">error</h1>';
-        }
-    });
-}
-</script>
+ 
     
 </html>
