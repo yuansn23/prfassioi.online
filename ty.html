@@ -188,7 +188,7 @@ function gtag_report_conversion(url) {
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body onload="initProtection()" class="bg-gray-50 text-gray-800">
     <script>
         // Check for dark mode preference
         if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
