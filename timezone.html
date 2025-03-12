@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>时区检测</title>
+</head>
+<body>
+    <button onclick="showTimezone()">显示时区信息</button>
+    <div id="result" style="margin-top: 20px; padding: 10px; border: 1px solid #ccc;"></div>
+
+    <script>
+        // 中国用户检测函数
+        const isChineseUser = () => {
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            return navigator.language.toLowerCase().startsWith('zh') || 
+                   timezone.includes('Asia/Shanghai') ||
+                   timezone.includes('Hongkong');
+        };
+
+        // 显示时区信息函数
+        function showTimezone() {
+            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            const isChinese = isChineseUser();
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <p>您的时区是：<strong>${timezone}</strong></p>
+                <p>是否可能是中国用户：${isChinese ? '是 🇨🇳' : '否'}</p>
+                <p>浏览器语言：${navigator.language}</p>
+            `;
+        }
+    </script>
+</body>
