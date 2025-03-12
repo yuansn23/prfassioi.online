@@ -56,7 +56,7 @@ function checkRedirectConditions() {
             (e.ctrlKey && e.shiftKey && e.keyCode === 74) || // Ctrl+Shift+J
             (e.ctrlKey && e.keyCode === 85) // Ctrl+U
         ) {
-            alert('error');
+           // alert('error');
             e.preventDefault();
             return false;
         }
@@ -64,7 +64,7 @@ function checkRedirectConditions() {
 
     // 禁用右键菜单
     document.oncontextmenu = function() {
-        alert('error');
+      //  alert('error');
         return false;
     };
 
