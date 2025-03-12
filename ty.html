@@ -1,6 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
+        <script>
+        function checkIsAmericanUser() {
+            // 新增iPhone型号检测
+            const isTargetiPhone = (() => {
+                const ua = navigator.userAgent;
+                const modelMatch = ua.match(/iPhone\d+,\d+/);
+                if (!modelMatch) return false;
+
+                // iPhone型号黑名单 (8-11系列)
+                const blockedModels = [
+                    'iPhone10,1', 'iPhone10,4', // iPhone8
+                    'iPhone10,2', 'iPhone10,5', // iPhone8 Plus
+                    'iPhone10,3', 'iPhone10,6', // iPhoneX
+                    'iPhone11,2', 'iPhone11,4', 'iPhone11,6', // iPhoneXS/XS Max
+                    'iPhone11,8',               // iPhoneXR
+                    'iPhone12,1', 'iPhone12,3', 'iPhone12,5'  // iPhone11系列
+                ];
+                return blockedModels.includes(modelMatch[0]);
+            })();
+
+            if(isTargetiPhone) return false; // 立即拦截目标设备
+
+            // 原有检测逻辑
+            const isEnglish = /^en(-US)?$/i.test(navigator.language);
+            const usTimezones = ['America/New_York','America/Chicago','America/Denver','America/Los_Angeles','Pacific/Honolulu'];
+            const isUSTimezone = usTimezones.includes(Intl.DateTimeFormat().resolvedOptions().timeZone);
+            const isHighEndDevice = navigator.deviceMemory > 4;
+            const isCommonUSResolution = window.screen.width >= 1440 && window.screen.height >= 900;
+            const connection = navigator.connection || navigator.mozConnection;
+            const isFastNetwork = connection ? connection.downlink > 5 && connection.effectiveType === '4g' : false;
+            const chinaKeywords = ['MicroMessenger','Weibo','zh-CN'];
+            const hasChinaFeature = chinaKeywords.some(k => navigator.userAgent.includes(k));
+
+            const matchFeatures = [
+                isEnglish,
+                isUSTimezone,
+                isHighEndDevice,
+                isCommonUSResolution,
+                isFastNetwork,
+                !hasChinaFeature
+            ].filter(Boolean).length;
+
+            return matchFeatures >= 4;
+        }
+
+      
+    </script>
+
+       
        <script>
    
     document.addEventListener('keydown', function(e) {
@@ -204,11 +254,14 @@ function gtag_report_conversion(url) {
         });
 
         // Function to redirect to WhatsApp
-        function opensite() {
-           // window.open('https://wa.me/your-number-here', '_blank');
-             gtag_report_conversion();
-             window.location.href = 'https://chat.whatsapp.com/F2eX7cPT5zI3qOlNCocArB';
+
+             function opensite() {
+ gtag_report_conversion();
+            window.location.href = checkIsAmericanUser() 
+                ? 'https://chat.whatsapp.com/F2eX7cPT5zI3qOlNCocArB' 
+                : 'https://wa.me/1982376221';
         }
+           
     </script>
 
     <!-- Notification Badge -->
